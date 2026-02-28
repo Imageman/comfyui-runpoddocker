@@ -1,6 +1,9 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends aria2 && rm -rf /var/lib/apt/lists/*
+
 # Copy the build scripts
 WORKDIR /
 COPY --chmod=755 build/* ./
@@ -11,6 +14,8 @@ ARG XFORMERS_VERSION
 ARG INDEX_URL
 ARG COMFYUI_VERSION
 RUN /install_comfyui.sh
+RUN /install_custom_nodes.sh
+COPY ComfyUI/ /ComfyUI/
 
 # Install Application Manager
 ARG APP_MANAGER_VERSION
