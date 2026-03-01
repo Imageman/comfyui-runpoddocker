@@ -3,6 +3,7 @@ set -euo pipefail
 
 MODELS_FILE="/models.txt"
 WORKSPACE_DIR="/workspace"
+INTERNAL_IO_PROBE_DIR="${INTERNAL_IO_PROBE_DIR:-/tmp}"
 WORKSPACE_COMFYUI="/workspace/ComfyUI"
 FLUX_TARGET="${WORKSPACE_COMFYUI}/models/diffusion_models/FLUX1"
 FLUX_LINK="${WORKSPACE_COMFYUI}/models/checkpoints/flux"
@@ -25,35 +26,39 @@ ensure_flux_symlink() {
     ln -s "${FLUX_TARGET}" "${FLUX_LINK}"
 }
 
-run_workspace_io_probe() {
+run_io_probe() {
+    local probe_name="$1"
+    local probe_dir="$2"
+
     if ! command -v python3 >/dev/null 2>&1; then
-        echo "WORKSPACE IO TEST: python3 is not installed, skipping"
+        echo "${probe_name}: python3 is not installed, skipping"
         return 0
     fi
 
-    if ! python3 - "${WORKSPACE_DIR}" "${WORKSPACE_IO_PROBE_MB}" "${WORKSPACE_IO_PROBE_BLOCK_KB}" <<'PY'
+    if ! python3 - "${probe_name}" "${probe_dir}" "${WORKSPACE_IO_PROBE_MB}" "${WORKSPACE_IO_PROBE_BLOCK_KB}" <<'PY'
 import ctypes
 import errno
 import os
 import sys
 import time
 
-workspace_dir = sys.argv[1]
-total_mb = int(sys.argv[2])
-block_kb = int(sys.argv[3])
+probe_name = sys.argv[1]
+probe_dir = sys.argv[2]
+total_mb = int(sys.argv[3])
+block_kb = int(sys.argv[4])
 
 if total_mb <= 0 or block_kb <= 0:
-    print("WORKSPACE IO TEST: invalid probe size, skipping")
+    print(f"{probe_name}: invalid probe size, skipping")
     raise SystemExit(0)
 
 o_direct = getattr(os, "O_DIRECT", None)
 if o_direct is None:
-    print("WORKSPACE IO TEST: O_DIRECT is unavailable, skipping")
+    print(f"{probe_name}: O_DIRECT is unavailable, skipping")
     raise SystemExit(0)
 
-os.makedirs(workspace_dir, exist_ok=True)
+os.makedirs(probe_dir, exist_ok=True)
 
-stat = os.statvfs(workspace_dir)
+stat = os.statvfs(probe_dir)
 alignment = max(4096, stat.f_bsize)
 block_size = block_kb * 1024
 total_bytes = total_mb * 1024 * 1024
@@ -63,7 +68,7 @@ if block_size % alignment != 0:
 if total_bytes % block_size != 0:
     total_bytes = ((total_bytes + block_size - 1) // block_size) * block_size
 
-probe_path = os.path.join(workspace_dir, ".codex-workspace-io-probe.bin")
+probe_path = os.path.join(probe_dir, ".codex-workspace-io-probe.bin")
 chunk_count = total_bytes // block_size
 libc = ctypes.CDLL(None, use_errno=True)
 buffer_ptr = ctypes.c_void_p()
@@ -76,13 +81,13 @@ def cleanup_file() -> None:
 
 def direct_error(prefix: str, err: OSError) -> None:
     if err.errno in {errno.EINVAL, errno.ENOTSUP, errno.EOPNOTSUPP, errno.EBADF}:
-        print(f"WORKSPACE IO TEST: {prefix} does not support O_DIRECT ({err.strerror}), skipping")
+        print(f"{probe_name}: {prefix} does not support O_DIRECT ({err.strerror}), skipping")
         raise SystemExit(0)
     raise err
 
 ret = libc.posix_memalign(ctypes.byref(buffer_ptr), alignment, block_size)
 if ret != 0:
-    print(f"WORKSPACE IO TEST: posix_memalign failed with code {ret}, skipping")
+    print(f"{probe_name}: posix_memalign failed with code {ret}, skipping")
     raise SystemExit(0)
 
 try:
@@ -130,8 +135,8 @@ try:
     write_mib_s = total_bytes / (1024 * 1024) / max(write_seconds, 1e-9)
     read_mib_s = total_read / (1024 * 1024) / max(read_seconds, 1e-9)
     print(
-        "WORKSPACE IO TEST: "
-        f"path={workspace_dir} size_mib={total_bytes // (1024 * 1024)} "
+        f"{probe_name}: "
+        f"path={probe_dir} size_mib={total_bytes // (1024 * 1024)} "
         f"block_kib={block_size // 1024} "
         f"write_mib_s={write_mib_s:.2f} "
         f"read_mib_s={read_mib_s:.2f}"
@@ -141,7 +146,7 @@ finally:
     libc.free(buffer_ptr)
 PY
     then
-        echo "WORKSPACE IO TEST: probe failed unexpectedly, continuing"
+        echo "${probe_name}: probe failed unexpectedly, continuing"
     fi
 }
 
@@ -151,7 +156,8 @@ if ! command -v aria2c >/dev/null 2>&1; then
 fi
 
 ensure_flux_symlink
-run_workspace_io_probe
+run_io_probe "WORKSPACE IO TEST" "${WORKSPACE_DIR}"
+run_io_probe "INTERNAL IO TEST" "${INTERNAL_IO_PROBE_DIR}"
 
 if [ ! -f "${MODELS_FILE}" ]; then
     echo "Models list not found: ${MODELS_FILE}"

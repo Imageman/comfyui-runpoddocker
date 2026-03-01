@@ -13,6 +13,9 @@ fi
 
 mkdir -p "${CUSTOM_NODES_DIR}"
 
+echo "Preinstalling TensorRT for CUDA 12 before custom nodes"
+"${VENV_PYTHON}" -m pip install --no-cache-dir "tensorrt-cu12==10.4.0" -c "${CONSTRAINTS_FILE}"
+
 while IFS= read -r line || [ -n "${line}" ]; do
     # Normalize CRLF-authored files before parsing fields on Linux.
     line="${line%$'\r'}"
@@ -50,5 +53,5 @@ while IFS= read -r line || [ -n "${line}" ]; do
     fi
 done < "${NODES_FILE}"
 
-"${VENV_PYTHON}" -m pip uninstall onnxruntime onnxruntime-gpu
-"${VENV_PYTHON}" -m pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
+"${VENV_PYTHON}" -m pip uninstall -y onnxruntime onnxruntime-gpu
+"${VENV_PYTHON}" -m pip install onnx onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/

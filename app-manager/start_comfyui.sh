@@ -10,17 +10,19 @@ for env_file in /etc/rp_environment /etc/environment; do
 done
 
 ARGS=("$@" --listen 0.0.0.0 --port 3001)
+LOG_FILE="/workspace/logs/comfyui.log"
 
 if [[ ${EXTRA_ARGS} ]]; then
     ARGS=("${ARGS[@]}" ${EXTRA_ARGS})
 fi
 
 export PYTHONUNBUFFERED=1
+mkdir -p /workspace/logs
 cd /workspace/ComfyUI
 source venv/bin/activate
 echo "COMFYUI: Starting ComfyUI"
 TCMALLOC="$(ldconfig -p | grep -Po "libtcmalloc.so.\d" | head -n 1)"
 export LD_PRELOAD="${TCMALLOC}"
-python3 main.py "${ARGS[@]}" > /workspace/logs/comfyui.log 2>&1 &
+python3 main.py "${ARGS[@]}" 2>&1 | tee "${LOG_FILE}" &
 echo "COMFYUI: ComfyUI Started"
 deactivate

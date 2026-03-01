@@ -18,3 +18,5 @@ safetensors==0.7.0
 sentencepiece==0.2.1
 
 av==16.1.0
+tensorrt==10.4.0
+tensorrt-cu12==10.4.0
