@@ -2,6 +2,8 @@
 
 # Docker image for ComfyUI: The most powerful and modular stable diffusion GUI, api and backend with a graph/nodes interface.
 
+Это решение для простого развертывания для дизайнеров ComfyUI с предустановленными нодами и с автоматическим скачиванием пакета нейросетей (при старте).
+
 [![GitHub Repo](https://img.shields.io/badge/github-repo-green?logo=github)](https://github.com/ashleykleynhans/comfyui-docker)
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/ashleykza/comfyui?logo=docker&label=dockerhub&color=blue)](https://hub.docker.com/repository/docker/ashleykza/comfyui)
 [![RunPod.io Template](https://img.shields.io/badge/runpod_template-deploy-9b4ce6?logo=linuxcontainers&logoColor=9b4ce6)](https://runpod.io/console/deploy?template=9eqyhd7vs0&ref=2xxro4sy)
@@ -17,9 +19,9 @@
 
 | Image          | CUDA   | Python | Torch  | xformers     |
 |----------------|--------|--------|--------|--------------|
-| cu128-py312 *  | 12.8.1 | 3.12   | 2.10.0 | -            |
+| cu128-py312    | 12.8.1 | 3.12   | 2.10.0 | -            |
 | cu128-py311    | 12.8.1 | 3.11   | 2.10.0 | -            |
-| cu124-py312    | 12.4.1 | 3.12   | 2.6.0  | 0.0.29.post3 |
+| cu124-py312 \* | 12.4.1 | 3.12   | 2.6.0  | 0.0.29.post3 |
 | cu124-py311    | 12.4.1 | 3.11   | 2.6.0  | 0.0.29.post3 |
 
 \* *default image*
@@ -127,6 +129,8 @@ You can obviously substitute the image name and tag with your own.
 | 8000         | 8000          | Application Manager  |
 | 8888         | 8888          | Jupyter Lab          |
 | 2999         | 2999          | Runpod File Uploader |
+
+Так же нужен TCP порт 22 для sftp (имя пользователя root, а ключь прописывается в админке runpod - settings - SSH public keys)
 
 ### Environment Variables
 
