@@ -3,6 +3,13 @@
 # Docker image for ComfyUI: The most powerful and modular stable diffusion GUI, api and backend with a graph/nodes interface.
 
 Это решение для простого развертывания для дизайнеров ComfyUI с предустановленными нодами и с автоматическим скачиванием пакета нейросетей (при старте).
+build/ - при создании образа
+models.txt - список URL моделей
+nodes.txt - вписок git-адресов для custom nodes
+constraints.txt  - исключения (для точных версий пакетов)
+
+scripts/ - при старте образа
+download_models.sh - экспресс-тест скорости работы накопителя, скачивание моделей
 
 [![GitHub Repo](https://img.shields.io/badge/github-repo-green?logo=github)](https://github.com/ashleykleynhans/comfyui-docker)
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/ashleykza/comfyui?logo=docker&label=dockerhub&color=blue)](https://hub.docker.com/repository/docker/ashleykza/comfyui)
@@ -130,7 +137,7 @@ You can obviously substitute the image name and tag with your own.
 | 8888         | 8888          | Jupyter Lab          |
 | 2999         | 2999          | Runpod File Uploader |
 
-Так же нужен TCP порт 22 для sftp (имя пользователя root, а ключь прописывается в админке runpod - settings - SSH public keys)
+Так же нужен TCP порт 22 для sftp (имя пользователя root, а ключ прописывается в админке runpod - settings - SSH public keys)
 
 ### Environment Variables
 
