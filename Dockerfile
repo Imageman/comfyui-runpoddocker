@@ -16,6 +16,8 @@ ARG COMFYUI_VERSION
 RUN /install_comfyui.sh
 RUN /install_custom_nodes.sh
 COPY ComfyUI/ /ComfyUI/
+# enable run any .sh files in folder (for download large files)
+RUN find /ComfyUI -type f -name "*.sh" -exec chmod 755 {} +
 
 # Install Application Manager
 ARG APP_MANAGER_VERSION

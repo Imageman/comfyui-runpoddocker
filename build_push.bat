@@ -7,7 +7,7 @@ set "ON_ERROR_PAUSE=1"
 
 rem === настройки образа ===
 set "IMAGE_NAME=realizedfantasy/comfyui-runpoddocker"
-set "TAG=2026-02-12"
+set "TAG=2026-03-28"
 
 rem build-context 
 rem set "DROOT_CTX=D:\sftp-root\home\realizedfantasy\mnt_storage"

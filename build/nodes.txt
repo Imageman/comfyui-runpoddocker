@@ -20,3 +20,9 @@ https://github.com/chflame163/ComfyUI_LayerStyle.git comfyui_layerstyle
 https://github.com/kijai/ComfyUI-WanVideoWrapper.git ComfyUI-WanVideoWrapper
 https://github.com/IAMCCS/IAMCCS-nodes.git IAMCCS-nodes
 https://github.com/Fannovel16/comfyui_controlnet_aux.git comfyui_controlnet_aux
+
+# show GPU usage in UI
+https://github.com/crystian/ComfyUI-Crystools.git ComfyUI-Crystools
+
+# позволяет из workflow скачивать нужные модели
+https://github.com/comfyuistudio/ComfyUI-Studio-nodes.git ComfyUI-Studio-nodes 
