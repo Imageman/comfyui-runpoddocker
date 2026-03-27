@@ -15,7 +15,7 @@ variable "APP" {
 
 # Версия ComfyUI, которая checkout'ится во время сборки.
 variable "RELEASE" {
-    default = "v0.17.1"
+    default = "v0.18.2"
 }
 # старая версия на vast.ai v0.5.1
 
@@ -31,7 +31,7 @@ variable "BASE_IMAGE_REPOSITORY" {
 
 # Версия базового образа.
 variable "BASE_IMAGE_VERSION" {
-    default = "2.4.15"
+    default = "2.4.18"
 }
 
 # Версия Application Manager, устанавливаемая в образ.
