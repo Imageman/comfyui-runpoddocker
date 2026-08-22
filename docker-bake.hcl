@@ -45,7 +45,7 @@ variable "CIVITAI_DOWNLOADER_VERSION" {
 }
 
 group "default" {
-    targets = ["cu124-py312"]
+    targets = ["cu128-py312"]
 }
 
 group "all" {

@@ -30,4 +30,11 @@ https://github.com/comfyuistudio/ComfyUI-Studio-nodes.git ComfyUI-Studio-nodes
 
 
 # работаем с FLUX 2
-# https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git
+# https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git ComfyUI-Flux2Klein-Enhancer
+
+# WanAnimateToVideo with multi-dimensional control
+https://github.com/wallen0322/ComfyUI-WanAnimate-Enhancer.git ComfyUI-WanAnimate-Enhancer
+
+
+# это для MiniMax H3
+https://github.com/Saganaki22/ComfyUI-sol-attn.git ComfyUI-sol-attn

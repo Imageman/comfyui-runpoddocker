@@ -46,6 +46,14 @@ while IFS= read -r line || [ -n "${line}" ]; do
     echo "Installing custom node: ${repo_url} -> ${node_dir}"
     git clone --depth 1 "${repo_url}" "${node_dir}"
 
+	if [ "${folder_name}" = "ComfyUI-Rife-Tensorrt" ]; then
+    echo "Pinning ${folder_name} to e971cfb71ac88ff1be6abd5bb8b4f04fdf110a88"
+		cd "${node_dir}"
+		git fetch --depth 1 origin e971cfb71ac88ff1be6abd5bb8b4f04fdf110a88
+		git checkout e971cfb71ac88ff1be6abd5bb8b4f04fdf110a88
+		test "$(git rev-parse HEAD)" = "e971cfb71ac88ff1be6abd5bb8b4f04fdf110a88"
+	fi
+
     requirements_file="${node_dir}/requirements.txt"
     if [ -f "${requirements_file}" ]; then
         echo "Installing Python requirements for ${folder_name}"

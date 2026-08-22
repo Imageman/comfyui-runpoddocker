@@ -1,6 +1,6 @@
 # https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors /workspace/ComfyUI/models/clip_vision/
 
-https://huggingface.co/lllyasviel/flux1_dev/resolve/main/flux1-dev-fp8.safetensors /workspace/ComfyUI/models/diffusion_models/FLUX1/
+# https://huggingface.co/lllyasviel/flux1_dev/resolve/main/flux1-dev-fp8.safetensors /workspace/ComfyUI/models/diffusion_models/FLUX1/
 # copy or symlink also to /workspace/ComfyUI/models/checkpoints/flux
 
 # https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors /workspace/ComfyUI/models/text_encoders/t5/

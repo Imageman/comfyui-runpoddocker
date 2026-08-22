@@ -7,26 +7,24 @@ set "ON_ERROR_PAUSE=1"
 
 rem === настройки образа ===
 set "IMAGE_NAME=realizedfantasy/comfyui-runpoddocker"
-set "TAG=2026-04-29"
 
-rem build-context 
+rem build-context
 rem set "DROOT_CTX=D:\sftp-root\home\realizedfantasy\mnt_storage"
 
 echo =====================================
 echo Build + Push:
-echo   %IMAGE_NAME%:%TAG%
 echo   %IMAGE_NAME%:latest
 echo Build context (droot): %DROOT_CTX%
 echo =====================================
 
 echo.
 echo [*] Building and pushing (no local --load)...
-docker buildx bake -f docker-bake.hcl cu124-py311 ^
-  --push 
+docker buildx bake -f docker-bake.hcl cu128-py312 ^
+  --push
 if errorlevel 1 goto :fail
 
 echo.
-echo ✅ Done: pushed %IMAGE_NAME%:%TAG% and %IMAGE_NAME%:latest
+echo ✅ Done: pushed %IMAGE_NAME% and %IMAGE_NAME%:latest
 
 echo OK
 pause
