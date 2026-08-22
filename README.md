@@ -27,9 +27,9 @@
 
 | Image          | CUDA   | Python | Torch  | xformers     |
 |----------------|--------|--------|--------|--------------|
-| cu128-py312    | 12.8.1 | 3.12   | 2.10.0 | -            |
-| cu128-py311    | 12.8.1 | 3.11   | 2.10.0 | -            |
-| cu124-py312 \* | 12.4.1 | 3.12   | 2.6.0  | 0.0.29.post3 |
+| cu128-py312 \* | 12.8.1 | 3.12   | 2.11.0 | -            |
+| cu128-py311    | 12.8.1 | 3.11   | 2.11.0 | -            |
+| cu124-py312    | 12.4.1 | 3.12   | 2.6.0  | 0.0.29.post3 |
 | cu124-py311    | 12.4.1 | 3.11   | 2.6.0  | 0.0.29.post3 |
 
 \* *default image*
@@ -37,7 +37,7 @@
 ### All Images Include
 
 * Ubuntu 22.04 LTS
-* [ComfyUI](https://github.com/comfyanonymous/ComfyUI) v0.18.2
+* [ComfyUI](https://github.com/comfyanonymous/ComfyUI) v0.33.1
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
 * [runpodctl](https://github.com/runpod/runpodctl)
@@ -45,7 +45,7 @@
 * [RunPod File Uploader](https://github.com/kodxana/RunPod-FilleUploader)
 * [croc](https://github.com/schollz/croc)
 * [rclone](https://rclone.org/)
-* [Application Manager](https://github.com/ashleykleynhans/app-manager)
+* [Application Manager](https://github.com/ashleykleynhans/app-manager) 2.0.1
 * [CivitAI Downloader](https://github.com/ashleykleynhans/civitai-downloader)
 
 ## Available on RunPod
