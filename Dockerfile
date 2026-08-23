@@ -1,4 +1,4 @@
-ARG BASE_IMAGE
+ARG BASE_IMAGE=ashleykza/runpod-base:2.6.0-python3.12-cuda12.8.1-torch2.11.0
 FROM ${BASE_IMAGE}
 
 # Install runtime dependencies
@@ -13,8 +13,9 @@ ARG TORCH_VERSION
 ARG XFORMERS_VERSION
 ARG INDEX_URL
 ARG COMFYUI_VERSION
+ARG CONSTRAINTS_FILENAME=constraints.txt
 RUN /install_comfyui.sh
-RUN /install_custom_nodes.sh
+RUN CONSTRAINTS_FILENAME="${CONSTRAINTS_FILENAME}" /install_custom_nodes.sh
 COPY ComfyUI/ /ComfyUI/
 # enable run any .sh files in folder (for download large files)
 RUN find /ComfyUI -type f -name "*.sh" -exec chmod 755 {} +

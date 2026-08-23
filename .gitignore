@@ -3,3 +3,5 @@
 *.safetensors
 *.bak
 ComfyUI/
+# CocoIndex Code (ccc)
+/.cocoindex_code/

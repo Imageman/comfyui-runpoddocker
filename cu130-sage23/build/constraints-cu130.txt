@@ -1,0 +1,9 @@
+torch==2.11.0+cu130
+torchvision==0.26.0+cu130
+torchaudio==2.11.0+cu130
+sageattention==2.2.0+cu.13.0.torch.2.11
+sageattn3==2.2.0+cu.13.0.torch.2.11
+
+# Keep custom-node dependency resolution on the selected Torch/CUDA matrix.
+numpy>=2.0,<2.8
+setuptools<82

@@ -7,7 +7,8 @@
 Папка build/ - при создании образа
 - models.txt - список URL моделей
 - nodes.txt - вписок git-адресов для custom nodes
-- constraints.txt - исключения (для точных версий пакетов)
+- constraints.txt - constraints для CUDA 12.8 / Torch 2.11.0
+- constraints-cu124.txt - constraints для CUDA 12.4 / Torch 2.6.0
 
 Папка scripts/ - при старте образа
 - download_models.sh - экспресс-тест скорости работы накопителя, скачивание моделей

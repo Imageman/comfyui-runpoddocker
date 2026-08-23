@@ -1,6 +1,7 @@
 @echo off
 chcp 65001 > nul
 setlocal enabledelayedexpansion
+rem Это ComfyUI для интерактивной работы (для дизайнера)
 
 rem Если запуск двойным кликом — окно закроется. Поэтому на ошибке делаем pause.
 set "ON_ERROR_PAUSE=1"
@@ -25,7 +26,7 @@ if errorlevel 1 goto :fail
 
 echo.
 echo ✅ Done: pushed %IMAGE_NAME% and %IMAGE_NAME%:latest
-
+powershell -c "[console]::beep(784,180); [console]::beep(988,180); [console]::beep(1319,400)"
 echo OK
 pause
 

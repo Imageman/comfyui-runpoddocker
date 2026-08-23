@@ -25,7 +25,8 @@ fi
 pip3 install -r requirements.txt
 pip3 install accelerate
 pip3 install sageattention==1.0.6
-pip install setuptools --upgrade
+# Torch 2.11.0 declares setuptools<82. Do not upgrade it past that bound.
+pip install "setuptools<82"
 
 # Patch comfy-kitchen's na3d custom op annotations so it works with torch < 2.7.
 # comfy-kitchen 0.2.28 (pinned by ComfyUI v0.31.0) uses builtin list[int]/

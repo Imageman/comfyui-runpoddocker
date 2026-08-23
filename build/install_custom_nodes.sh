@@ -2,9 +2,15 @@
 set -euo pipefail
 
 NODES_FILE="/nodes.txt"
-CONSTRAINTS_FILE="/constraints.txt"
+CONSTRAINTS_FILENAME="${CONSTRAINTS_FILENAME:-constraints.txt}"
+CONSTRAINTS_FILE="/${CONSTRAINTS_FILENAME}"
 CUSTOM_NODES_DIR="/ComfyUI/custom_nodes"
 VENV_PYTHON="/ComfyUI/venv/bin/python"
+
+if [ ! -f "${CONSTRAINTS_FILE}" ]; then
+    echo "Constraints file not found: ${CONSTRAINTS_FILE}"
+    exit 1
+fi
 
 if [ ! -f "${NODES_FILE}" ]; then
     echo "Custom nodes list not found: ${NODES_FILE}"
