@@ -1,0 +1,44 @@
+{
+  "task_id": "",
+  "workflow_file": "video_minimax_ref2va_workflow_api.json",
+  "prompt_file": "prompt.txt",
+  "references": {
+    "images": ["reference_img.jpg"],
+    "videos": ["reference_video.mp4"],
+    "audios": ["reference_voice.mp3"]
+  },
+  "generation": {
+    "width": 1344,
+    "height": 768,
+    "length": 56,
+    "seed": 12345,
+    "steps": 20,
+    "output_filename_prefix": "minimax_output"
+  },
+  "sol_attention": {
+    "enabled": true,
+    "tau_start": 1.9,
+    "tau_end": 0.8,
+    "curve": "smoothstep",
+    "min_tokens": 4096,
+    "strict": true,
+    "dense_percent": 0.0,
+    "thresh_type": "diag",
+    "int8_qk": true,
+    "int8_pv": false,
+    "sink_conditioning": "exact_kv",
+    "dense_blocks": ""
+  },
+  "easy_cache": {
+    "reuse_threshold": 0.15,
+    "start_percent": 0.2,
+    "end_percent": 0.9,
+    "verbose": true
+  },
+  "runpod": {
+    "timeout_sec": 7200,
+    "poll_interval_sec": 5,
+    "submit_timeout_sec": 120
+  },
+  "output_dir": "out"
+}

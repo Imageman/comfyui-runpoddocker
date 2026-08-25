@@ -1,0 +1,6 @@
+**
+!serverless/capi.py
+!serverless/s3_minio.py
+!serverless/handler.py
+!serverless/requirements.txt
+!serverless/start_serverless.sh
