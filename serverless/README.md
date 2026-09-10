@@ -1,9 +1,12 @@
 # ComfyUI RunPod Serverless worker
 
+Это serverless Runpod реализация Minimax H3 video ref2video.
+
 The worker derives from the existing `cu128-py312` and
 `cu130-py313-sage23` images. It runs only the local ComfyUI backend and the
 RunPod handler. The `ComfyUI` directory is supplied as a BuildKit named context
 because it is a Windows junction.
+
 
 ## Request
 
