@@ -15,7 +15,7 @@ variable "APP" {
 
 # Версия ComfyUI, которая checkout'ится во время сборки.
 variable "RELEASE" {
-    default = "v0.33.1"
+    default = "v0.36.0"
 }
 # старая версия на vast.ai v0.5.1
 
@@ -36,7 +36,7 @@ variable "BASE_IMAGE_VERSION" {
 
 # Версия Application Manager, устанавливаемая в образ.
 variable "APP_MANAGER_VERSION" {
-    default = "2.0.1"
+    default = "2.0.2"
 }
 
 # Версия CivitAI Downloader, устанавливаемая в образ.
