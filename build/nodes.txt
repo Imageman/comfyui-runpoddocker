@@ -41,3 +41,5 @@ https://github.com/Saganaki22/ComfyUI-sol-attn.git ComfyUI-sol-attn
 # https://github.com/kijai/ComfyUI-SolAttn_triton.git ComfyUI-SolAttn_triton
 # https://github.com/BMB12d3/ComfyUI-H3-Ref2VA-Accelerator.git ComfyUI-H3-Ref2VA-Accelerator - давало ошибку, убрал
 https://github.com/Apache0ne/ComfyUI-fasterminimax.git ComfyUI-fasterminimax
+
+https://github.com/Kablex/ComfyUI-Ref2VA-VSA.git ComfyUI-Ref2VA-VSA

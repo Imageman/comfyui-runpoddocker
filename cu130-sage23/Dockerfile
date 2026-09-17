@@ -25,7 +25,7 @@ COPY --chmod=755 cu130-sage23/build/install_custom_nodes.sh /install_custom_node
 COPY --chmod=755 build/install_app_manager.sh /install_app_manager.sh
 COPY --chmod=755 build/install_civitai_model_downloader.sh /install_civitai_model_downloader.sh
 
-ARG COMFYUI_VERSION=v0.33.1
+ARG COMFYUI_VERSION=v0.36.0
 ARG TORCH_VERSION=2.11.0+cu130
 ARG TORCHVISION_VERSION=0.26.0+cu130
 ARG TORCHAUDIO_VERSION=2.11.0+cu130
@@ -65,7 +65,7 @@ COPY --chmod=755 scripts/start_comfyui.sh /start_comfyui.sh
 COPY --chmod=755 cu130-sage23/scripts/fix_venv.sh /fix_venv.sh
 COPY --chmod=755 cu130-sage23/scripts/start.sh /start.sh
 
-ARG RELEASE=v0.33.1
+ARG RELEASE=v0.36.0
 ENV TEMPLATE_VERSION=${RELEASE} \
     VENV_PATH=/workspace/ComfyUI/venv
 

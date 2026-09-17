@@ -29,8 +29,9 @@ build_cu130.bat
 The resulting tag is:
 
 ```text
-realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.33.1
+realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.36.0
 ```
+See in docker-bake.hcl variable "RELEASE"
 
 Jupyter accepts either `JUPYTER_LAB_PASSWORD` (compatible with the older image)
 or `JUPYTER_PASSWORD`. If neither is set, Jupyter starts without a token and
