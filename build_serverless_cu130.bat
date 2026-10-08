@@ -17,16 +17,16 @@ pushd "%~dp0"
 echo =====================================
 echo ComfyUI RunPod Serverless build + push
 echo Suffix: %SERVERLESS_SUFFIX%
-echo Targets: serverless-cu128 serverless-cu130
+echo Targets: serverless-cu130
 echo Mode: --push (no local --load)
 echo =====================================
 echo.
 
-docker buildx bake -f "%BAKE_FILE%" serverless-cu128 serverless-cu130 --push
+docker buildx bake -f "%BAKE_FILE%" serverless-cu130 --push
 if errorlevel 1 goto :fail
 
 echo.
-echo Build completed and both images were pushed.
+echo Build completed image were pushed.
 powershell -NoProfile -Command "[console]::beep(784,180); [console]::beep(988,180); [console]::beep(1319,400)"
 popd
 pause

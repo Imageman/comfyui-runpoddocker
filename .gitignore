@@ -10,3 +10,4 @@ serverless/test_example/test_runpod.log
 # CocoIndex Code (ccc)
 /.cocoindex_code/
 /serverless/reference/
+/backup/
