@@ -93,8 +93,8 @@ not reinstall it because its base image already contains SageAttention3.
 
 With the default suffix `1`, it publishes:
 
-- `realizedfantasy/comfyui-runpoddocker:cu128-py312-v0.33.1-serverless1`
-- `realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.33.1-serverless1`
+- `realizedfantasy/comfyui-runpoddocker:cu128-py312-v0.39.0-serverless1`
+- `realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.39.0-serverless1`
 
 The real `.env` test files are excluded from the build and must never be
 published in the image.

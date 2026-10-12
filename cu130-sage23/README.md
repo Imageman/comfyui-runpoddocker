@@ -29,7 +29,7 @@ build_cu130.bat
 The resulting tag is:
 
 ```text
-realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.37.0
+realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.39.0
 ```
 See in docker-bake.hcl variable "RELEASE"
 
