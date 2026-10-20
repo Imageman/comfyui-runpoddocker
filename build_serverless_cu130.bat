@@ -3,10 +3,10 @@ chcp 65001 > nul
 setlocal
 
 rem Edit this value for the normal double-click build.
-set "SERVERLESS_SUFFIX=2"
+set "SERVERLESS_SUFFIX="
 
 rem An optional first argument overrides the value above:
-rem     build_serverless.bat 2
+rem     build_serverless_cu130.bat 2
 if not "%~1"=="" set "SERVERLESS_SUFFIX=%~1"
 
 set "BAKE_FILE=serverless/docker-bake.hcl"

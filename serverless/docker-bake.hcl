@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "v0.39.0"
+    default = "v0.42.1"
 }
 
 variable "SERVERLESS_SUFFIX" {

@@ -74,14 +74,16 @@ endpoint.
 
 ## Build and push
 
-`build_serverless.bat` directly pushes both images. Edit its
-`SERVERLESS_SUFFIX` value, or override it with the first argument:
+To build and push only the CUDA 13 / Python 3.13 serverless image, use
+`build_serverless_cu130.bat`. The helper defaults to suffix `2`; the optional
+first argument overrides it:
 
 ```bat
-build_serverless.bat 2
+build_serverless_cu130.bat 2
 ```
 
-To build and push only the CUDA 12.8 serverless image, use the separate helper:
+To build and push only the CUDA 12.8 / Python 3.12 serverless image, use
+`build_serverless_cu128.bat`. It also defaults to suffix `2`:
 
 ```bat
 build_serverless_cu128.bat 2
@@ -91,10 +93,13 @@ The CUDA 12.8 target installs the Comfy-Org SageAttention3 wheel built for
 Linux x86_64, Python 3.12, CUDA 12.8, and PyTorch 2.11. The CUDA 13 target does
 not reinstall it because its base image already contains SageAttention3.
 
-With the default suffix `1`, it publishes:
+The `.bat` helpers publish these tags with their default suffix `2`:
 
-- `realizedfantasy/comfyui-runpoddocker:cu128-py312-v0.39.0-serverless1`
-- `realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.39.0-serverless1`
+- `realizedfantasy/comfyui-runpoddocker:cu128-py312-v0.42.1-serverless2`
+- `realizedfantasy/comfyui-runpoddocker:cu130-py313-sage23-v0.42.1-serverless2`
+
+Calling `docker buildx bake` directly uses the `SERVERLESS_SUFFIX` default `1`
+from `serverless/docker-bake.hcl`.
 
 The real `.env` test files are excluded from the build and must never be
 published in the image.
