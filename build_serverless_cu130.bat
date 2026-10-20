@@ -3,7 +3,7 @@ chcp 65001 > nul
 setlocal
 
 rem Edit this value for the normal double-click build.
-set "SERVERLESS_SUFFIX=1"
+set "SERVERLESS_SUFFIX=2"
 
 rem An optional first argument overrides the value above:
 rem     build_serverless.bat 2
@@ -22,7 +22,7 @@ echo Mode: --push (no local --load)
 echo =====================================
 echo.
 
-docker buildx bake -f "%BAKE_FILE%" serverless-cu130 --push
+docker buildx bake --allow=fs.read=d:\sftp-root\home\realizedfantasy\minimax_serverless\ComfyUI -f "%BAKE_FILE%" serverless-cu130 --push
 if errorlevel 1 goto :fail
 
 echo.

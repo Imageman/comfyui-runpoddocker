@@ -42,7 +42,8 @@ https://github.com/wallen0322/ComfyUI-WanAnimate-Enhancer.git ComfyUI-WanAnimate
 # ставлю альтернативный вариант, который кто-то разрабатывает дальше
 https://github.com/r-vage/ComfyUI-sol-attn.git ComfyUI-sol-attn
 
-
+# Veda Sparse Attention for ComfyUI - ускоритель, которые выкидывает ненужные токены
+https://github.com/veda-sparse/Veda-on-ComfyUI.git Veda-on-ComfyUI
 
 https://github.com/Apache0ne/ComfyUI-fasterminimax.git ComfyUI-fasterminimax
 

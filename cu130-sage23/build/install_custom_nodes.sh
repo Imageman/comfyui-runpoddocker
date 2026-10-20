@@ -20,7 +20,9 @@ mkdir -p "${CUSTOM_NODES_DIR}"
 "${VENV_PYTHON}" -m pip install --no-cache-dir \
     "tensorrt-cu13==${TENSORRT_VERSION}"
 
+line_number=0
 while IFS= read -r line || [ -n "${line}" ]; do
+    line_number=$((line_number + 1))
     line="${line%$'\r'}"
     line="${line#"${line%%[![:space:]]*}"}"
     line="${line%"${line##*[![:space:]]}"}"
@@ -35,8 +37,8 @@ while IFS= read -r line || [ -n "${line}" ]; do
     extra="${extra%$'\r'}"
 
     if [ -z "${repo_url:-}" ] || [ -z "${folder_name:-}" ] || [ -n "${extra:-}" ]; then
-        echo "Skipping malformed nodes.txt line: ${line}"
-        continue
+        echo "ERROR: malformed nodes.txt entry at line ${line_number}; expected '<repository URL> <folder name>'" >&2
+        exit 1
     fi
 
     node_dir="${CUSTOM_NODES_DIR}/${folder_name}"
