@@ -15,7 +15,7 @@ variable "APP" {
 
 # Версия ComfyUI, которая checkout'ится во время сборки.
 variable "RELEASE" {
-    default = "v0.39.0"
+    default = "v0.42.1"
 }
 # старая версия на vast.ai v0.5.1
 
