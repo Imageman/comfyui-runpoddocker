@@ -61,9 +61,28 @@ RunPod job is marked `FAILED`. Successful RunPod output is intentionally small:
 Local input/output/task files are removed after publication. Per-worker
 concurrency is fixed at one.
 
+## ComfyUI startup arguments
+
+By default ComfyUI starts with
+`--listen 127.0.0.1 --port 8188 --disable-auto-launch --cache-none`.
+`COMFY_PORT` changes the default port. An unset or empty `COMFYUI_ARGS` uses
+these defaults; a nonempty value replaces the entire argument list, for example:
+
+```text
+COMFYUI_ARGS=--listen 127.0.0.1 --port 8188 --disable-auto-launch --cache-none
+```
+
+Arguments support shell-style quotes (for paths containing spaces), without
+shell expansion or command execution. Invalid quoting or a whitespace-only
+value stops startup with an error. Startup logs print the argument source,
+effective command, and handler address. If you change the port, also set
+`COMFY_URL` to the matching address (default `127.0.0.1:8188`).
+
 ## Interactive debugging
 
-ComfyUI listens on `0.0.0.0:8188`. If HTTP port `8188` is exposed in the
+For external debugging, set
+`COMFYUI_ARGS=--listen 0.0.0.0 --port 8188 --disable-auto-launch --cache-none`.
+If HTTP port `8188` is exposed in the
 RunPod Pod configuration, the ComfyUI web interface can be opened and used
 interactively for debugging. The handler continues to connect locally through
 `127.0.0.1:8188`.

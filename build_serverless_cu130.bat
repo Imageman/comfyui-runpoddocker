@@ -3,7 +3,7 @@ chcp 65001 > nul
 setlocal
 
 rem Edit this value for the normal double-click build.
-set "SERVERLESS_SUFFIX="
+set "SERVERLESS_SUFFIX=3"
 
 rem An optional first argument overrides the value above:
 rem     build_serverless_cu130.bat 2

@@ -35,6 +35,8 @@ https://github.com/comfyuistudio/ComfyUI-Studio-nodes.git ComfyUI-Studio-nodes
 # WanAnimateToVideo with multi-dimensional control
 https://github.com/wallen0322/ComfyUI-WanAnimate-Enhancer.git ComfyUI-WanAnimate-Enhancer
 
+# simple retime and upscale in `Video Save Extended (VHS)` node
+https://github.com/Imageman/ComfyUI-VideoVHS-Extended.git ComfyUI-VideoVHS-Extended
 
 # это для MiniMax H3
 # временно не работает
