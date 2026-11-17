@@ -3,7 +3,7 @@ chcp 65001 > nul
 setlocal
 
 rem Edit this value for the normal double-click build.
-set "SERVERLESS_SUFFIX=3"
+set "SERVERLESS_SUFFIX=5"
 
 rem An optional first argument overrides the value above:
 rem     build_serverless_cu130.bat 2
@@ -27,6 +27,7 @@ if errorlevel 1 goto :fail
 
 echo.
 echo Build completed image were pushed.
+powershell -NoProfile -Command "$config = docker buildx bake --allow=fs.read=d:\sftp-root\home\realizedfantasy\minimax_serverless\ComfyUI -f '%BAKE_FILE%' serverless-cu130 --push --print; if ($LASTEXITCODE -ne 0) { Write-Warning 'Could not determine the image name.' } else { try { $tags = ($config | ConvertFrom-Json).target.'serverless-cu130'.tags; if ($tags) { $tags | ForEach-Object { Write-Host ('Image: ' + $_) } } else { Write-Warning 'No image tags found in Bake configuration.' } } catch { Write-Warning 'Could not read the image name from Bake configuration.' } }"
 powershell -NoProfile -Command "[console]::beep(784,180); [console]::beep(988,180); [console]::beep(1319,400)"
 popd
 pause

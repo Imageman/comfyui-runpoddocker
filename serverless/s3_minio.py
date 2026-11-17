@@ -788,6 +788,24 @@ class S3MiniApp:
             use_api_v1=use_api_v1,
         )
 
+    def _upload_request_with_retry(self, operation: str, key: str, budget: RetryBudget, request):
+        """Retry upload requests on any exception using the shared budget."""
+        attempt = 0
+        while True:
+            attempt += 1
+            try:
+                return request()
+            except Exception as exc:
+                if isinstance(exc, S3Error):
+                    _log_auth_context_if_needed(exc)
+                if not budget.consume_retry():
+                    raise
+                logger.warning(
+                    f"{operation} failed: s3://{self.cfg.bucket}/{key} "
+                    f"attempt={attempt} budget_remaining={budget.remaining}: {exc}"
+                )
+                time.sleep(min(8.0, 0.5 * (2 ** (attempt - 1)) + random.uniform(0.0, 1.0)))
+
     def _upload_part_with_retry(
         self,
         key: str,
@@ -796,6 +814,7 @@ class S3MiniApp:
         data: bytes,
         content_type: str,
         budget: RetryBudget,
+        can_reduce_part_size: bool,
     ) -> str:
         """Upload one multipart part with retries bound to its upload ID and number."""
         attempt = 0
@@ -819,14 +838,12 @@ class S3MiniApp:
             except Exception as exc:
                 if isinstance(exc, S3Error):
                     _log_auth_context_if_needed(exc)
-                if not _retry_predicate(exc):
-                    raise
                 logger.warning(
                     f"UPLOAD_PART failed: s3://{self.cfg.bucket}/{key} "
                     f"upload_id={upload_id} part={part_number} attempt={attempt} "
                     f"budget_remaining={budget.remaining}: {exc}"
                 )
-                if self._is_timeout_exception(exc):
+                if can_reduce_part_size and self._is_timeout_exception(exc):
                     if not budget.consume_retry():
                         raise
                     raise
@@ -862,7 +879,7 @@ class S3MiniApp:
             except Exception as exc:
                 if isinstance(exc, S3Error):
                     _log_auth_context_if_needed(exc)
-                if not _retry_predicate(exc) or not budget.consume_retry():
+                if not budget.consume_retry():
                     raise
                 logger.warning(
                     f"COMPLETE_MULTIPART failed: s3://{self.cfg.bucket}/{key} "
@@ -883,10 +900,11 @@ class S3MiniApp:
         budget: RetryBudget,
     ) -> Any:
         """Upload a file with explicit per-part and completion retries."""
-        upload_id = self.client._create_multipart_upload(
-            self.cfg.bucket,
-            key,
-            {"Content-Type": content_type},
+        upload_id = self._upload_request_with_retry(
+            "CREATE_MULTIPART", key, budget,
+            lambda: self.client._create_multipart_upload(
+                self.cfg.bucket, key, {"Content-Type": content_type}
+            ),
         )
         logger.info(
             f"CREATE_MULTIPART succeeded: s3://{self.cfg.bucket}/{key} "
@@ -912,6 +930,7 @@ class S3MiniApp:
                 data,
                 content_type,
                 budget,
+                self._next_part_size_bytes(part_size_bytes) is not None,
             )
             return Part(part_number, etag)
 
@@ -963,16 +982,16 @@ class S3MiniApp:
         )
         t0 = time.perf_counter()
         try:
+            budget = RetryBudget(MAX_RETRY_COUNT)
             if part_count <= 1:
-                res = self.client.fput_object(
-                    self.cfg.bucket,
-                    key,
-                    str(local_path),
-                    content_type=ctype,
-                    part_size=part_size_bytes,
+                res = self._upload_request_with_retry(
+                    "PUT_OBJECT", key, budget,
+                    lambda: self.client.fput_object(
+                        self.cfg.bucket, key, str(local_path),
+                        content_type=ctype, part_size=part_size_bytes,
+                    ),
                 )
             else:
-                budget = RetryBudget(MAX_RETRY_COUNT)
                 while True:
                     try:
                         res = self._upload_file_multipart(
@@ -1213,7 +1232,8 @@ class S3MiniApp:
         Notes:
             - default multipart size is 5 MiB for files up to 64 MiB and 8 MiB for larger files;
               timeout adaptation may lower it to 1 MiB for this S3-compatible endpoint.
-            - multipart uploads retry each part independently and retry completion;
+            - upload requests retry on exceptions, including non-XML HTTP errors;
+              multipart creation, parts and completion share one retry budget;
               timeout failures restart with a smaller part size within one shared budget of
               10 retries plus the initial request; resumable upload across process restarts
               is not guaranteed.
@@ -1618,7 +1638,7 @@ class S3MiniApp:
         Example:
             obj = app.get_json("tmp/data.json")
         """
-        logger.info(f"GET_JSON: s3://{self.cfg.bucket}/{key}")
+        logger.trace(f"GET_JSON: s3://{self.cfg.bucket}/{key}")
         try:
             resp = self.client.get_object(self.cfg.bucket, key)
         except S3Error as exc:
